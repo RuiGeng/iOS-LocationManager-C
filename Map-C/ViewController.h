@@ -21,5 +21,11 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *detailAddressLabel;
 
+@property (weak, nonatomic) IBOutlet UILabel *addressLabel;
+
+@property (weak, nonatomic) IBOutlet UITextField *longitudeTextField;
+
+@property (weak, nonatomic) IBOutlet UITextField *latitudeTextField;
+
 @end
 

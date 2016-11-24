@@ -82,6 +82,7 @@
         return;
     }
     [geocoder geocodeAddressString:self.addressTextField.text completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
+        
         if (error!=nil || placemarks.count==0) {
             return ;
         }
@@ -95,6 +96,41 @@
         self.detailAddressLabel.text = [NSString stringWithFormat:@"Detail Address: %@", placemark.name];
     }];
 }
+
+// Converting Coordinates into Place Names
+- (IBAction)AntiEncoder:(id)sender {
+    
+    //Create geocoder object
+    CLGeocoder *geocoder=[[CLGeocoder alloc]init];
+    
+    //if input is empty
+    if (self.longitudeTextField.text.length == 0) {
+        return;
+    }
+    
+    //if input is empty
+    if (self.latitudeTextField.text.length == 0 ) {
+        return;
+    }
+    
+    //Create Location
+    CLLocation *location=[[CLLocation alloc]initWithLatitude:[self.latitudeTextField.text floatValue] longitude:[self.longitudeTextField.text floatValue]];
+    
+    //reverse Geocode Location
+    [geocoder reverseGeocodeLocation:location completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
+        
+        if (error !=nil || placemarks.count == 0) {
+            NSLog(@"%@",error);
+            return ;
+        }
+        for (CLPlacemark *placemark in placemarks) {
+            //address
+            self.addressLabel.text = [NSString stringWithFormat:@"Address: %@", placemark.name];
+        }
+        
+    }];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
