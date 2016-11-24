@@ -51,19 +51,19 @@
 //When location change more then relocation distance, will trigger this function
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations{
     
-    //get old location
-    CLLocation *startLocation=[locations firstObject];
-    //get new location
+    //get start location
+    //CLLocation *startLocation=[locations firstObject];
+    //get current location
     CLLocation *currentLocation=[locations lastObject];
     
-    NSLog(@"Old Location %@",startLocation.timestamp);
+    //NSLog(@"Old Location %@",startLocation.timestamp);
     
     NSLog(@"New Location %@",currentLocation.timestamp);
     
     //Set coordinater
-    CLLocationCoordinate2D coordinate=startLocation.coordinate;
+    CLLocationCoordinate2D coordinate= currentLocation.coordinate;
     
-    NSLog(@"Longitude：%f,Latitude：%f,Altitude：%f,Course：%f,Speed：%f",coordinate.longitude,coordinate.latitude,startLocation.altitude, startLocation.course, startLocation.speed);
+    //NSLog(@"Longitude：%f,Latitude：%f,Altitude：%f,Course：%f,Speed：%f",coordinate.longitude,coordinate.latitude,startLocation.altitude, startLocation.course, startLocation.speed);
     
     NSLog(@"Longitude：%f,Latitude：%f,Altitude：%f,Course：%f,Speed：%f",coordinate.longitude,coordinate.latitude,currentLocation.altitude, currentLocation.course, currentLocation.speed);
     
@@ -71,6 +71,30 @@
     //[_locationManager stopUpdatingLocation];
 }
 
+
+// Converting Place Names Into Coordinates
+- (IBAction)genocoder:(id)sender {
+    
+    //Create geocoder object
+    CLGeocoder *geocoder=[[CLGeocoder alloc]init];
+    //if input is empty
+    if (self.addressTextField.text.length ==0) {
+        return;
+    }
+    [geocoder geocodeAddressString:self.addressTextField.text completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
+        if (error!=nil || placemarks.count==0) {
+            return ;
+        }
+        //Create placemark object
+        CLPlacemark *placemark = [placemarks firstObject];
+        //get longitude
+        self.longitudeLabel.text =[NSString stringWithFormat:@"Longitude: %f",placemark.location.coordinate.longitude];
+        //get latitude
+        self.latitudeLabel.text = [NSString stringWithFormat:@"Latitude: %f",placemark.location.coordinate.latitude];
+        //get detail address
+        self.detailAddressLabel.text = [NSString stringWithFormat:@"Detail Address: %@", placemark.name];
+    }];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

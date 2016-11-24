@@ -13,5 +13,13 @@
 
 @property (nonatomic,strong)CLLocationManager *locationManager;
 
+@property (weak, nonatomic) IBOutlet UITextField *addressTextField;
+
+@property (weak, nonatomic) IBOutlet UILabel *longitudeLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *latitudeLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *detailAddressLabel;
+
 @end
 
