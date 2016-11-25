@@ -94,6 +94,13 @@
         self.latitudeLabel.text = [NSString stringWithFormat:@"Latitude: %f",placemark.location.coordinate.latitude];
         //get detail address
         self.detailAddressLabel.text = [NSString stringWithFormat:@"Detail Address: %@", placemark.name];
+        
+        //use addressDictionary
+        NSArray *lines = placemark.addressDictionary[ @"FormattedAddressLines"];
+        NSString *addressString = [lines componentsJoinedByString:@"\n"];
+        NSLog(@"Address: %@", addressString);
+        
+        NSLog(@"name=%@\r isoCountryCode=%@\r country=%@\r postalcode=%@\r administrativeArea=%@\r subAdministrativeArea=%@\r locality=%@\r subLocality=%@\r thoroughfare=%@\r subThoroughfare=%@\r region=%@\r timeZone=%@", placemark.name, placemark.ISOcountryCode, placemark.country, placemark.postalCode, placemark.administrativeArea, placemark.subAdministrativeArea, placemark.locality, placemark.subLocality, placemark.thoroughfare, placemark.subThoroughfare, placemark.region, placemark.timeZone);
     }];
 }
 
@@ -125,7 +132,14 @@
         }
         for (CLPlacemark *placemark in placemarks) {
             //address
-            self.addressLabel.text = [NSString stringWithFormat:@"Address: %@", placemark.name];
+            //self.addressLabel.text = [NSString stringWithFormat:@"Address: %@", placemark.name];
+            
+            //use addressDictionary
+            NSArray *lines = placemark.addressDictionary[ @"FormattedAddressLines"];
+            NSString *addressString = [lines componentsJoinedByString:@" "];
+            NSLog(@"Address: %@", addressString);
+            
+            self.addressLabel.text = addressString;
         }
         
     }];
