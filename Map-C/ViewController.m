@@ -139,7 +139,8 @@
             NSString *addressString = [lines componentsJoinedByString:@" "];
             NSLog(@"Address: %@", addressString);
             
-            self.addressLabel.text = addressString;
+            self.addressLabel.text = [NSString stringWithFormat:@"Address: %@", addressString];
+
         }
         
     }];

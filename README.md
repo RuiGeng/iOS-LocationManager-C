@@ -1,1 +1,1 @@
-# An example of using iOS MapKit Objective-C
+# An example of using iOS LocationManager Objective-C
